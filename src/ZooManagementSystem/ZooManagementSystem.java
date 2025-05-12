@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package oop.demo.zoomanagementsystem;
+package ZooManagementSystem;
 
 /**
  *
@@ -253,5 +253,6 @@ public class ZooManagementSystem {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+        input.close();
     }
 }
