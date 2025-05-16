@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ZooManagementSystem;
 
 /**
  * Animal Class - Represents animals in the zoo
  * @author JerryLee
  */
+
 public class Animal {
     public String name;
     public String species;
@@ -22,6 +19,13 @@ public class Animal {
     public String getName() {
         return name;
     }
+    public String getSpecies() {
+        return species;
+    }
+    public int getAge() {
+        return age;
+    }
+
 
     public void display() {
         System.out.print("Animal Name: " + name);
