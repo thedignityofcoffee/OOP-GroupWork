@@ -1,3 +1,8 @@
+/**
+ * author: Bertrand
+ * GitHub: thedignityofcoffee
+ */
+
 import javax.swing.*;
 import java.awt.*;
 //import java.awt.event.*;
@@ -43,9 +48,24 @@ public class BounceBoxDashboard {
 
     private void showFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) return true;
+                return f.getName().toLowerCase().endsWith(".txt");
+            }
+            @Override
+            public String getDescription() {
+                return "Text Files (*.txt)";
+            }
+        });
         int result = fileChooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            if (!file.getName().toLowerCase().endsWith(".txt")) {
+                JOptionPane.showMessageDialog(frame, "The file type is not supported!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             lastLoadedFile = file.getAbsolutePath();
             parseShapeFile(file);
             JOptionPane.showMessageDialog(frame, "File imported successfully!", "Info", JOptionPane.INFORMATION_MESSAGE);
