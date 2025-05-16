@@ -196,5 +196,125 @@
          
         box.start();
     }
+    
+    public static void addShapesFromFile(String filename) throws FileNotFoundException {
+        BounceBox box = new BounceBox(700, 500);
+        FileInputStream fileIn = new FileInputStream(filename);
+        Scanner scan = new Scanner(fileIn);
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine().trim();
+            if (line.isEmpty()) continue;
+            Scanner lineScan = new Scanner(line);
+            if (!lineScan.hasNext()) continue;
+            String shapeType = lineScan.next();
+            if (shapeType.equalsIgnoreCase("Circle")) {
+                if (!lineScan.hasNextInt()) continue;
+                int x = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int y = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int radius = lineScan.nextInt();
+                Circle circle;
+                if (lineScan.hasNextDouble() && lineScan.hasNextDouble()) {
+                    double vx = lineScan.nextDouble();
+                    double vy = lineScan.nextDouble();
+                    if (lineScan.hasNextInt() && lineScan.hasNextInt() && lineScan.hasNextInt()) {
+                        int red = lineScan.nextInt();
+                        int green = lineScan.nextInt();
+                        int blue = lineScan.nextInt();
+                        circle = new Circle(x, y, radius);
+                        circle.setVelocity(vx, vy);
+                        circle.setColor(new Color(red, green, blue));
+                    } else {
+                        circle = new Circle(x, y, radius);
+                        circle.setVelocity(vx, vy);
+                    }
+                } else {
+                    circle = new Circle(x, y, radius);
+                }
+                box.addShape(circle);
+            } else if (shapeType.equalsIgnoreCase("Square")) {
+                if (!lineScan.hasNextInt()) continue;
+                int x = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int y = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int side = lineScan.nextInt();
+                Square square;
+                if (lineScan.hasNextDouble() && lineScan.hasNextDouble()) {
+                    double vx = lineScan.nextDouble();
+                    double vy = lineScan.nextDouble();
+                    if (lineScan.hasNextInt() && lineScan.hasNextInt() && lineScan.hasNextInt()) {
+                        int red = lineScan.nextInt();
+                        int green = lineScan.nextInt();
+                        int blue = lineScan.nextInt();
+                        square = new Square(x, y, side);
+                        square.setVelocity(vx, vy);
+                        square.setColor(new Color(red, green, blue));
+                    } else {
+                        square = new Square(x, y, side);
+                        square.setVelocity(vx, vy);
+                    }
+                } else {
+                    square = new Square(x, y, side);
+                }
+                box.addShape(square);
+            } else if (shapeType.equalsIgnoreCase("Triangle")) {
+                if (!lineScan.hasNextInt()) continue;
+                int x = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int y = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int base = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int height = lineScan.nextInt();
+                Triangle triangle;
+                if (lineScan.hasNextDouble() && lineScan.hasNextDouble()) {
+                    double vx = lineScan.nextDouble();
+                    double vy = lineScan.nextDouble();
+                    if (lineScan.hasNextInt() && lineScan.hasNextInt() && lineScan.hasNextInt()) {
+                        int red = lineScan.nextInt();
+                        int green = lineScan.nextInt();
+                        int blue = lineScan.nextInt();
+                        triangle = new Triangle(x, y, base, height, vx, vy, red, green, blue);
+                    } else {
+                        triangle = new Triangle(x, y, base, height);
+                        triangle.setVelocity(vx, vy);
+                    }
+                } else {
+                    triangle = new Triangle(x, y, base, height);
+                }
+                box.addShape(triangle);
+            } else if (shapeType.equalsIgnoreCase("Rectangle")) {
+                if (!lineScan.hasNextInt()) continue;
+                int x = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int y = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int width = lineScan.nextInt();
+                if (!lineScan.hasNextInt()) continue;
+                int height = lineScan.nextInt();
+                Rectangle rectangle;
+                if (lineScan.hasNextDouble() && lineScan.hasNextDouble()) {
+                    double vx = lineScan.nextDouble();
+                    double vy = lineScan.nextDouble();
+                    if (lineScan.hasNextInt() && lineScan.hasNextInt() && lineScan.hasNextInt()) {
+                        int red = lineScan.nextInt();
+                        int green = lineScan.nextInt();
+                        int blue = lineScan.nextInt();
+                        rectangle = new Rectangle(x, y, width, height, vx, vy, red, green, blue);
+                    } else {
+                        rectangle = new Rectangle(x, y, width, height);
+                        rectangle.setVelocity(vx, vy);
+                    }
+                } else {
+                    rectangle = new Rectangle(x, y, width, height);
+                }
+                box.addShape(rectangle);
+            }
+            lineScan.close();
+        }
+        scan.close();
+        box.start();
+    }
 }
- 
