@@ -164,8 +164,43 @@ public class BounceBoxDashboard {
     }
 
     private void showAboutDialog() {
-        String msg = "GitHub: https://github.com/thedignityofcoffee/OOP-GroupWork © 2025 thedignityofcoffee\n";
-        JOptionPane.showMessageDialog(frame, msg, "About", JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = new JDialog(frame, "About", true);
+        dialog.setLayout(new BorderLayout(10, 10));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton githubButton;
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getResource("github.png"));
+            Image img = icon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(img);
+            githubButton = new JButton("GitHub Repo Address", icon);
+        } catch (Exception e) {
+            githubButton = new JButton("GitHub Repo Address");
+        }
+        githubButton.setFocusPainted(false);
+        githubButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        githubButton.addActionListener(e -> {
+            try {
+                java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/thedignityofcoffee/OOP-GroupWork"));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(dialog, "Failed to open browser.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        panel.add(Box.createHorizontalGlue());
+        panel.add(githubButton);
+        panel.add(Box.createRigidArea(new Dimension(30, 0)));
+        JLabel copyright = new JLabel("© 2025 thedignityofcoffee");
+        copyright.setAlignmentY(Component.CENTER_ALIGNMENT);
+        panel.add(copyright);
+        panel.add(Box.createHorizontalGlue());
+        dialog.add(panel, BorderLayout.CENTER);
+        dialog.setSize(450, 120);
+        dialog.setLocationRelativeTo(frame);
+        dialog.setResizable(false);
+        dialog.setVisible(true);
     }
 
     private void exitToMainMenu() {
