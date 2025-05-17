@@ -10,10 +10,10 @@ package BankingTaskListGUI;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class BankingTaskListGUI {
         // Main components
@@ -53,7 +53,7 @@ public class BankingTaskListGUI {
 
     private void initializeFrame() {
         frame = new JFrame("Banking Task Management System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window
         frame.setSize(800, 600);
         frame.setLayout(new BorderLayout(10, 10));
 
