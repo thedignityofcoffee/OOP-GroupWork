@@ -124,6 +124,7 @@ public class ZooManagementSystemGUI extends JFrame {
         JTextField vehicleCost = new JTextField(10);
         JTextField fuelCost = new JTextField(10);
         JTextField caretakersField = new JTextField(20);
+        JTextField accountField = new JTextField(15);
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         panel.add(new JLabel("Move animal from which zoo?"));
@@ -136,6 +137,8 @@ public class ZooManagementSystemGUI extends JFrame {
         panel.add(fuelCost);
         panel.add(new JLabel("Caretakers (#-separated, max 3):"));
         panel.add(caretakersField);
+        panel.add(new JLabel("Bank Account Number:"));
+        panel.add(accountField);
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Move Animal", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
@@ -148,22 +151,40 @@ public class ZooManagementSystemGUI extends JFrame {
                 try {
                     double vCost = Double.parseDouble(vehicleCost.getText());
                     double fCost = Double.parseDouble(fuelCost.getText());
-                    String[] caretakers = caretakersField.getText().split("#");
+                    double totalCost = vCost + fCost;
 
+                    String[] caretakers = caretakersField.getText().split("#");
                     if (caretakers.length < 1 || caretakers.length > 3) {
                         throw new IllegalArgumentException("Number of caretakers must be between 1 and 3.");
                     }
 
-                    Item vehicle = new Item("Transport Truck", "VEH_001");
-                    vehicle.setPrice(vCost);
+                    String accountNumber = accountField.getText();
+                    BankAccount account = accounts.get(accountNumber);
+                    if (account == null) {
+                        throw new IllegalArgumentException("Account not found: " + accountNumber);
+                    }
 
-                    Item fuel = new Item("Diesel Fuel", "FUEL_001");
-                    fuel.setPrice(fCost);
+                    double previousBalance = account.getBalance();
+                    account.withdraw(totalCost);
 
-                    Logistics logistics = new Logistics(vehicle, fuel, caretakers);
+                    if (account.getBalance() < previousBalance) {
+                        // Withdrawal successful, proceed
+                        Item vehicle = new Item("Transport Truck", "VEH_001");
+                        vehicle.setPrice(vCost);
 
-                    from.moveAnimal(name, to, logistics);
-                    outputArea.setText("Animal moved from " + from.getName() + " to " + to.getName() + ".");
+                        Item fuel = new Item("Diesel Fuel", "FUEL_001");
+                        fuel.setPrice(fCost);
+
+                        Logistics logistics = new Logistics(vehicle, fuel, caretakers);
+
+                        from.moveAnimal(name, to, logistics);
+                        outputArea.setText("Animal moved from " + from.getName() + " to " + to.getName() + ". Total cost RMB " + totalCost + " withdrawn from account: " + accountNumber);
+                        taskManager.addTask("Withdrew RMB " + totalCost + " from account: " + accountNumber);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Insufficient funds for transaction.", "Transaction Failed", JOptionPane.ERROR_MESSAGE);
+                        taskManager.addTask("Failed withdrawal attempt of RMB " + totalCost + " from account: " + accountNumber);
+                    }
+
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(this, "Invalid cost format!", "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (IllegalArgumentException e) {
