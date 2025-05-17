@@ -3,6 +3,8 @@
  * GitHub: thedignityofcoffee
  */
 
+package bouncebox;
+
 import javax.swing.*;
 import java.awt.*;
 //import java.awt.event.*;
