@@ -85,6 +85,7 @@ public class RestaurantBilling extends RestaurantBillingSystem {
         bill.append("\n===== RESTAURANT BILL =====\n");
         bill.append("Customer: ").append(customerName).append("\n\n");
         bill.append("Order Details:\n");
+        bill.append("Payment successful\n");
 
         HashMap<String, Integer> uniqueMeals = new HashMap<>();
         HashMap<String, Double> mealPrices = new HashMap<>();
