@@ -48,10 +48,10 @@ public class Dashboard {
             }
         });
         btnZoo.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Zoo System GUI is not implemented yet.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Failed to launch Zoo System GUI!\n", "Info", JOptionPane.INFORMATION_MESSAGE);
         });
         btnRestaurant.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Restaurant System GUI is not implemented yet.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Failed to launch Restaurant System GUI!\n", "Info", JOptionPane.INFORMATION_MESSAGE);
         });
         btnAbout.addActionListener(e -> showAboutDialog());
 
