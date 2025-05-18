@@ -24,7 +24,7 @@ public class BounceView implements Observer  {
        model.addObserver(this);
         
         frame = new JFrame("Bounce Box");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // 只关闭动画窗口本身
         panel = new BouncePanel(width, height);
         frame.setContentPane(panel);
         frame.pack();
