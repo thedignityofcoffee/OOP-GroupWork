@@ -7,23 +7,29 @@ package ZooManagementSystem;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.util.HashMap;
+import BankingTaskListGUI.*;
 
 public class ZooManagementSystemGUI extends JFrame {
     private Zoo southernZone;
     private Zoo northernZone;
     private JTextArea outputArea;
+    private HashMap<String, BankAccount> accounts;
+    private TaskManager taskManager;
 
     public ZooManagementSystemGUI() {
         southernZone = new Zoo("Southern-Zone Zoo");
         northernZone = new Zoo("Northern-Zone Zoo");
+        accounts = new HashMap<>();
+        taskManager = new TaskManager();
 
         initializeAnimals();
 
         setTitle("Zoo Management System");
-        setSize(700, 500);
+        setSize(700, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
 
         JPanel topPanel = new JPanel();
         JLabel titleLabel = new JLabel("Zoo Management System");
@@ -34,13 +40,15 @@ public class ZooManagementSystemGUI extends JFrame {
         outputArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(outputArea);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         JButton displaySouthBtn = new JButton("Display Southern Zoo");
         JButton displayNorthBtn = new JButton("Display Northern Zoo");
         JButton addAnimalBtn = new JButton("Add Animal");
         JButton moveAnimalBtn = new JButton("Move Animal");
         JButton removeAnimalBtn = new JButton("Remove Animal");
         JButton findAnimalBtn = new JButton("Find Animal");
+        JButton aboutBtn = new JButton("About");
+        JButton exitBtn = new JButton("Exit");
 
         displaySouthBtn.addActionListener(e -> showAnimals(southernZone));
         displayNorthBtn.addActionListener(e -> showAnimals(northernZone));
@@ -48,6 +56,8 @@ public class ZooManagementSystemGUI extends JFrame {
         moveAnimalBtn.addActionListener(e -> moveAnimalDialog());
         removeAnimalBtn.addActionListener(e -> removeAnimalDialog());
         findAnimalBtn.addActionListener(e -> findAnimalDialog());
+        aboutBtn.addActionListener(e -> about());
+        exitBtn.addActionListener(e -> System.exit(0));
 
         buttonPanel.add(displaySouthBtn);
         buttonPanel.add(displayNorthBtn);
@@ -55,6 +65,8 @@ public class ZooManagementSystemGUI extends JFrame {
         buttonPanel.add(moveAnimalBtn);
         buttonPanel.add(removeAnimalBtn);
         buttonPanel.add(findAnimalBtn);
+        buttonPanel.add(aboutBtn);
+        buttonPanel.add(exitBtn);
 
         add(topPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
@@ -168,7 +180,6 @@ public class ZooManagementSystemGUI extends JFrame {
                     account.withdraw(totalCost);
 
                     if (account.getBalance() < previousBalance) {
-                        // Withdrawal successful, proceed
                         Item vehicle = new Item("Transport Truck", "VEH_001");
                         vehicle.setPrice(vCost);
 
@@ -230,6 +241,19 @@ public class ZooManagementSystemGUI extends JFrame {
                 outputArea.setText("Animal not found in either zoo.");
             }
         }
+    }
+
+    private void about() {
+        JFrame frame = new JFrame("About");
+        frame.setSize(300, 200);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        JLabel label = new JLabel("Designed by JerryLee", JLabel.CENTER);
+        label.setFont(new Font("Courier New", Font.PLAIN, 24));
+        panel.add(label, BorderLayout.CENTER);
+        frame.add(panel);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
