@@ -307,8 +307,9 @@ public class RestaurantManagementSystem extends JFrame {
         });
 
         generateBillButton.addActionListener(e -> {
-            String customerAccount = JOptionPane.showInputDialog(this, "Enter customer bank account:");
+            String customerAccount = JOptionPane.showInputDialog(this, "Enter customer bank account:(default account :202318020203)");
             BankingTaskManager bankingTaskManager = new BankingTaskManager();
+            bankingTaskManager.createAccount("202318020203",1000,1);
             BankAccount account = bankingTaskManager.getAccount(customerAccount);
             while (account == null){
                 customerAccount = JOptionPane.showInputDialog(this, "Could not find this account, enter it again");
