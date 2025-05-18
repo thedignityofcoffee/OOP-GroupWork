@@ -58,10 +58,20 @@ public class Dashboard {
             }
         });
         btnZoo.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Failed to launch Zoo System GUI!\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                Class<?> clazz = Class.forName("ZooManagementSystem.ZooManagementSystemGUI");
+                clazz.getMethod("main", String[].class).invoke(null, (Object) new String[]{});
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Failed to launch Zoo System GUI!\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         btnRestaurant.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Failed to launch Restaurant System GUI!\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                Class<?> clazz = Class.forName("RestaurantManagementSystem.RestaurantManagementSystem");
+                clazz.getMethod("main", String[].class).invoke(null, (Object) new String[]{});
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Failed to launch Restaurant System GUI!\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         btnAbout.addActionListener(e -> showAboutDialog());
 
