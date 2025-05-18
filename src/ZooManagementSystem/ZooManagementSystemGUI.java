@@ -26,7 +26,7 @@ public class ZooManagementSystemGUI extends JFrame {
         initializeAnimals();
 
         setTitle("Zoo Management System");
-        setSize(700, 600);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
@@ -131,6 +131,8 @@ public class ZooManagementSystemGUI extends JFrame {
     }
 
     private void moveAnimalDialog() {
+        BankAccount DefaultAccount = new BankAccount(10000, 10);
+        accounts.put("8888",DefaultAccount);
         JComboBox<String> fromSelector = new JComboBox<>(new String[]{"Southern-Zone", "Northern-Zone"});
         JTextField nameField = new JTextField(10);
         JTextField vehicleCost = new JTextField(10);
@@ -149,7 +151,7 @@ public class ZooManagementSystemGUI extends JFrame {
         panel.add(fuelCost);
         panel.add(new JLabel("Caretakers (#-separated, max 3):"));
         panel.add(caretakersField);
-        panel.add(new JLabel("Bank Account Number:"));
+        panel.add(new JLabel("Bank Account Number(Default-8888):"));
         panel.add(accountField);
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Move Animal", JOptionPane.OK_CANCEL_OPTION);
