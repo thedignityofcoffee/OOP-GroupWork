@@ -124,4 +124,8 @@ public class BankingTaskManager {
     public ArrayList<String> getLowPriorityTasks() {
         return taskManager.getLowPriorityTasks();
     }
+    // New method for connection with restaurant and zoo
+    public BankAccount getAccount(String accountNum){
+        return accounts.get(accountNum);
+    }
     }

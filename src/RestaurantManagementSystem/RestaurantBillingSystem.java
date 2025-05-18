@@ -9,6 +9,7 @@ package RestaurantManagementSystem;
  * for the billing system
  * @author ashongtical
  */
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 public abstract class RestaurantBillingSystem {
@@ -34,17 +35,17 @@ public abstract class RestaurantBillingSystem {
         return false;
     }
 
-    public void displayMenu() {
+    public void displayMenu(JTextArea textArea) {
         if (menu.isEmpty()) {
-            System.out.println("Menu is currently empty.");
+            textArea.append("Menu is currently empty.\n");
             return;
         }
 
-        System.out.println("\n===== RESTAURANT MENU =====");
+        textArea.append("\n===== RESTAURANT MENU =====\n");
         for (Meal meal : menu) {
-            System.out.println(meal);
+            textArea.append(meal.toString() + "\n");
         }
-        System.out.println("==========================");
+        textArea.append("==========================\n");
     }
 
     public Meal findMealByName(String mealName) {

@@ -10,8 +10,10 @@ package RestaurantManagementSystem;
  * @author ashongtical
  */
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import BankingTaskListGUI.*;
 public class RestaurantBilling extends RestaurantBillingSystem {
     private ArrayList<Meal> order;
     private HashMap<String, Integer> mealQuantities;
@@ -50,13 +52,13 @@ public class RestaurantBilling extends RestaurantBillingSystem {
         System.out.println("Order cleared.");
     }
 
-    public void displayOrder() {
+    public void displayOrder(JTextArea textArea) {
         if (order.isEmpty()) {
-            System.out.println("Current order is empty.");
+            textArea.append("Current order is empty.\n");
             return;
         }
 
-        System.out.println("\n===== CURRENT ORDER =====");
+        textArea.append("\n===== CURRENT ORDER =====\n");
         HashMap<String, Integer> uniqueMeals = new HashMap<>();
         HashMap<String, Double> mealPrices = new HashMap<>();
 
@@ -69,12 +71,13 @@ public class RestaurantBilling extends RestaurantBillingSystem {
         for (String mealName : uniqueMeals.keySet()) {
             int quantity = uniqueMeals.get(mealName);
             double price = mealPrices.get(mealName);
-            System.out.printf("%-20s %d x RMB%.2f = RMB%.2f\n",
-                    mealName, quantity, price, quantity * price);
+            textArea.append(String.format("%-20s %d x RMB%.2f = RMB%.2f\n",
+                    mealName, quantity, price, quantity * price));
         }
-        System.out.println("--------------------------");
-        System.out.printf("TOTAL: RMB%.2f\n", calculateBill());
-        System.out.println("========================");
+
+        textArea.append("--------------------------\n");
+        textArea.append(String.format("TOTAL: RMB%.2f\n", calculateBill()));
+        textArea.append("========================\n");
     }
 
     public String generateBill(String customerName) {
