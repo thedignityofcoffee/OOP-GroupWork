@@ -1,5 +1,8 @@
 package RestaurantManagementSystem;
 
+import BankingTaskListGUI.BankAccount;
+import BankingTaskListGUI.BankingTaskManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -264,13 +267,13 @@ public class RestaurantManagementSystem extends JFrame {
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton viewMenuButton = new JButton("View Menu");
-        JButton addMealButton = new JButton("Add Meal");
+        JButton AddOrderButton = new JButton("Add Order");
         JButton viewOrderButton = new JButton("View Order");
         JButton generateBillButton = new JButton("Generate Bill");
         JButton clearOrderButton = new JButton("Clear Order");
 
         buttonPanel.add(viewMenuButton);
-        buttonPanel.add(addMealButton);
+        buttonPanel.add(AddOrderButton);
         buttonPanel.add(viewOrderButton);
         buttonPanel.add(generateBillButton);
         buttonPanel.add(clearOrderButton);
@@ -288,7 +291,7 @@ public class RestaurantManagementSystem extends JFrame {
             billing.displayMenu(textArea);
         });
 
-        addMealButton.addActionListener(e -> {
+        AddOrderButton.addActionListener(e -> {
             String mealName = JOptionPane.showInputDialog(this, "Enter the name of the meal to add to the order:");
             if (mealName != null && !mealName.trim().isEmpty()) {
                 if (billing.addMealToOrder(mealName)) {
@@ -304,9 +307,17 @@ public class RestaurantManagementSystem extends JFrame {
         });
 
         generateBillButton.addActionListener(e -> {
-            String customerName = JOptionPane.showInputDialog(this, "Enter customer name:");
-            if (customerName != null && !customerName.trim().isEmpty()) {
-                String bill = billing.generateBill(customerName);
+            String customerAccount = JOptionPane.showInputDialog(this, "Enter customer bank account:");
+            BankingTaskManager bankingTaskManager = new BankingTaskManager();
+            BankAccount account = bankingTaskManager.getAccount(customerAccount);
+            while (account == null){
+                customerAccount = JOptionPane.showInputDialog(this, "Could not find this account, enter it again");
+                bankingTaskManager = new BankingTaskManager();
+                account = bankingTaskManager.getAccount(customerAccount);
+            }
+            bankingTaskManager.withdraw(customerAccount, billing.calculateBill());
+            if (customerAccount != null && !customerAccount.trim().isEmpty()) {
+                String bill = billing.generateBill(customerAccount);
                 textArea.append(bill + "\n");
 
                 int option = JOptionPane.showConfirmDialog(this,
