@@ -54,7 +54,7 @@ public class BankingTaskListGUI {
     private void initializeFrame() {
         frame = new JFrame("Banking Task Management System");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window
-        frame.setSize(800, 600);
+        frame.setSize(880, 700); 
         frame.setLayout(new BorderLayout(10, 10));
 
         // Create main panels
@@ -67,6 +67,7 @@ public class BankingTaskListGUI {
         frame.add(transactionPanel, BorderLayout.CENTER);
         frame.add(taskManagementPanel, BorderLayout.SOUTH);
 
+        frame.setLocationRelativeTo(null); // Center the frame
         frame.setVisible(true);
     }
 
