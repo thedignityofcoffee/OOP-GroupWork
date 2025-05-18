@@ -19,7 +19,7 @@ public class BounceBoxDashboard {
 
     public BounceBoxDashboard() {
         frame = new JFrame("Bounce Box Dashboard");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // close only this window
         frame.setSize(400, 350);
         frame.setLayout(new GridLayout(3, 2, 10, 10));
 
