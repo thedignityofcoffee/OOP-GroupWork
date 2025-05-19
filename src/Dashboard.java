@@ -79,7 +79,7 @@ public class Dashboard {
         frame.setVisible(true);
     }
 
-    private void showAboutDialog() {
+    public void showAboutDialog() {
         JDialog dialog = new JDialog(frame, "About", true);
         dialog.setLayout(new BorderLayout(10, 10)); // Keep original spacing or scale if needed
         JPanel panel = new JPanel();
