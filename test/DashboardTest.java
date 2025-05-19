@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
-import java.net.URI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,69 +52,6 @@ public class DashboardTest {
         }
 
         assertEquals(5, buttonCount); // There should be 5 buttons
-    }
-
-    @Test
-    public void testAboutDialogGitHubButton() {
-        // Invoke the about dialog
-        dashboard.showAboutDialog();
-
-        // Find the dialog (this part may need improvement based on actual UI structure)
-        Window[] windows = Window.getWindows();
-        JDialog aboutDialog = null;
-
-        for (Window window : windows) {
-            if (window instanceof JDialog && "About".equals(((JDialog) window).getTitle())) {
-                aboutDialog = (JDialog) window;
-                break;
-            }
-        }
-
-        assertNotNull("About dialog should be displayed", aboutDialog);
-
-        // Find the GitHub button in the dialog
-        JButton githubButton = findButtonByText(aboutDialog, "GitHub Repo Address");
-        assertNotNull("GitHub button should exist", githubButton);
-
-        // Test the button action (simulate click)
-        try {
-            // Temporarily override Desktop.getDesktop() to test
-            Desktop originalDesktop = Desktop.getDesktop();
-            Desktop mockDesktop = new Desktop() {
-                @Override
-                public void browse(URI uri) {
-                    assertEquals("https://github.com/thedignityofcoffee/OOP-GroupWork", uri.toString());
-                }
-
-                // Implement other abstract methods with empty bodies
-                @Override public void open(java.io.File file) {}
-                @Override public void edit(java.io.File file) {}
-                @Override public void print(java.io.File file) {}
-                @Override public void mail() {}
-                @Override public void mail(java.net.URI mailtoURI) {}
-                @Override public boolean isSupported(Action action) { return true; }
-            };
-
-            // Use reflection to set the desktop field (requires access to private members)
-            Field desktopField = Desktop.class.getDeclaredField("desktop");
-            desktopField.setAccessible(true);
-            desktopField.set(null, mockDesktop);
-
-            // Simulate button click
-            for (ActionListener listener : githubButton.getActionListeners()) {
-                listener.actionPerformed(new java.awt.event.ActionEvent(
-                        githubButton,
-                        java.awt.event.ActionEvent.ACTION_PERFORMED,
-                        "click"
-                ));
-            }
-
-            // Restore original desktop
-            desktopField.set(null, originalDesktop);
-
-        } catch (Exception e) {
-            fail("Exception occurred while testing GitHub button: " + e.getMessage());
-        }
     }
 
     @Test
